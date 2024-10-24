@@ -9,25 +9,24 @@ echo  [2] Wistore (Shokouh)
 echo.
 set /p number=
 
+:: Set paths (using short paths to avoid Unicode issues)
+set "SEPIDAR=C:\App\Sepidar"
+set "CONFIG=C:\App\Change Sepidar Connection"
+
+:: Clean old files
+del "C:\App\Sepidar\user.config"
+del "C:\App\Sepidar\*.License"
+del "C:\App\Sepidar\VersionLicense.cdx"
+
+:: Copy new files based on selection
 if %number% == 1 (
-    del "C:\App\Sepidar\user.config"
-    del "C:\App\Sepidar\0057230 (1).License"
-    del "C:\App\Sepidar\0063452 (2).License"
-    del "C:\App\Sepidar\VersionLicense.cdx"
-    copy "C:\App\Change Sepidar Connection\Files\Tempo Client\user.config" "C:\App\Sepidar\user.config" /Y
-    copy "C:\App\Change Sepidar Connection\Files\Tempo Client\0057230 (1).License" "C:\App\Sepidar\0057230 (1).License" /Y
-    copy "C:\App\Change Sepidar Connection\Files\Tempo Client\VersionLicense.cdx" "C:\App\Sepidar\VersionLicense.cdx" /Y
+    xcopy "%CONFIG%\Files\Tempo Client\*.*" "%SEPIDAR%\" /Y /Q /E
 ) else if %number% == 2 (
-    del "C:\App\Sepidar\user.config"
-    del "C:\App\Sepidar\0057230 (1).License"
-    del "C:\App\Sepidar\0063452 (2).License"
-    del "C:\App\Sepidar\VersionLicense.cdx"
-    copy "C:\App\Change Sepidar Connection\Files\Wistore Client\user.config" "C:\App\Sepidar\user.config" /Y
-    copy "C:\App\Change Sepidar Connection\Files\Wistore Client\0063452 (2).License" "C:\App\Sepidar\0063452 (2).License" /Y
-    copy "C:\App\Change Sepidar Connection\Files\Wistore Client\VersionLicense.cdx" "C:\App\Sepidar\VersionLicense.cdx" /Y
+    xcopy "%CONFIG%\Files\Wistore Client\*.*" "%SEPIDAR%\" /Y /Q /E
 ) else (
     echo The number is not 1 or 2.
     pause
 )
 
-start C:\App\Sepidar\Shell.exe
+:: Launch Sepidar
+start "" "%SEPIDAR%\Shell.exe"
